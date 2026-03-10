@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INVALSI – Italiano Terza Media</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blu: #003d8f;
+    --blu-scuro: #002860;
+    --blu-chiaro: #e8f0fb;
+    --verde: #1a7a4a;
+    --rosso: #c0392b;
+    --grigio: #f4f5f7;
+    --grigio-bordo: #d0d5de;
+    --testo: #1a1a2e;
+    --sidebar: 260px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f7;
+    color: var(--testo);
+    min-height: 100vh;
+  }
+
+  /* ===== SCHERMATA INTRO ===== */
+  #intro-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #002860 0%, #003d8f 60%, #1565c0 100%);
+    padding: 40px 20px;
+  }
+
+  .intro-logo {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 28px;
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  .intro-logo .logo-badge {
+    background: var(--blu);
+    color: white;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+  }
+
+  .intro-logo .logo-text {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .intro-card {
+    background: white;
+    border-radius: 16px;
+    max-width: 780px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .intro-header {
+    background: var(--blu);
+    color: white;
+    padding: 28px 36px;
+    text-align: center;
+  }
+
+  .intro-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .intro-header p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 6px;
+  }
+
+  .intro-body {
+    padding: 36px;
+  }
+
+  .intro-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .info-box {
+    background: var(--grigio);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--grigio-bordo);
+  }
+
+  .info-box .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .info-box .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blu);
+  }
+
+  .intro-sezioni {
+    margin-bottom: 28px;
+  }
+
+  .intro-sezioni h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .sezione-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--grigio);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 4px solid var(--blu);
+    font-size: 14px;
+  }
+
+  .sezione-row .s-num {
+    font-weight: 700;
+    color: var(--blu);
+    min-width: 22px;
+  }
+
+  .sezione-row .s-name { flex: 1; }
+  .sezione-row .s-q {
+    font-size: 12px;
+    background: var(--blu-chiaro);
+    color: var(--blu);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .istruzioni-box {
+    background: #fffbea;
+    border: 1px solid #f0d060;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+
+  .istruzioni-box h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #7a5c00;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  .istruzioni-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .istruzioni-box ul li {
+    font-size: 13.5px;
+    color: #4a3a00;
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .istruzioni-box ul li::before {
+    content: "›";
+    color: #c09000;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .nome-input-wrap {
+    margin-bottom: 28px;
+  }
+
+  .nome-input-wrap label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .nome-input-wrap input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--grigio-bordo);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .nome-input-wrap input:focus {
+    border-color: var(--blu);
+  }
+
+  .btn-start {
+    width: 100%;
+    padding: 16px;
+    background: var(--blu);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-start:hover { background: var(--blu-scuro); }
+  .btn-start:active { transform: scale(0.99); }
+  .btn-start:disabled { background: #aaa; cursor: not-allowed; }
+
+  /* ===== LAYOUT PROVA ===== */
+  #prova-screen { display: none; min-height: 100vh; }
+
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 58px;
+    background: var(--blu-scuro);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .top-badge {
+    background: white;
+    color: var(--blu);
+    font-weight: 800;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  .top-title {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .timer-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.12);
+    padding: 6px 14px;
+    border-radius: 8px;
+  }
+
+  .timer-icon { font-size: 16px; }
+
+  #timer-display {
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 1px;
+    font-family: 'Inter', monospace;
+  }
+
+  #timer-display.warning { color: #ffcc00; }
+  #timer-display.danger { color: #ff6b6b; animation: pulse 1s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .nome-badge {
+    font-size: 13px;
+    opacity: 0.75;
+  }
+
+  .layout {
+    display: flex;
+    padding-top: 58px;
+    min-height: 100vh;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: var(--sidebar);
+    flex-shrink: 0;
+    background: white;
+    border-right: 1px solid var(--grigio-bordo);
+    position: fixed;
+    top: 58px;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-section {
+    padding: 14px 16px 8px;
+  }
+
+  .sidebar-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-stato {
+    padding: 12px 16px;
+    background: var(--grigio);
+    margin: 0 12px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .stato-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .stato-row .s-label { color: #777; }
+  .stato-row .s-val { font-weight: 700; color: var(--testo); }
+
+  .nav-sezione-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--blu);
+    padding: 14px 16px 6px;
+    border-top: 1px solid var(--grigio-bordo);
+    margin-top: 4px;
+  }
+
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    padding: 0 12px 12px;
+  }
+
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1.5px solid var(--grigio-bordo);
+    background: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+  }
+
+  .nav-btn:hover { border-color: var(--blu); color: var(--blu); }
+  .nav-btn.active { background: var(--blu); color: white; border-color: var(--blu); }
+  .nav-btn.answered { background: var(--blu-chiaro); border-color: #7aabee; color: var(--blu); }
+  .nav-btn.flagged { border-color: #e67e22; background: #fef0e0; color: #e67e22; }
+  .nav-btn.answered.flagged { background: #fde8c8; border-color: #e67e22; color: #e67e22; }
+
+  .sidebar-legenda {
+    padding: 12px 16px;
+    margin-top: auto;
+    border-top: 1px solid var(--grigio-bordo);
+  }
+
+  .legenda-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #aaa; margin-bottom: 8px; font-weight: 700; }
+
+  .legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .legenda-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1.5px solid;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    margin-left: var(--sidebar);
+    flex: 1;
+    padding: 32px 40px;
+    max-width: 900px;
+  }
+
+  .domanda-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .domanda-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tag-numero {
+    background: var(--blu);
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+
+  .tag-sezione {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    background: var(--grigio);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .flag-btn {
+    background: none;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .flag-btn:hover { border-color: #e67e22; color: #e67e22; }
+  .flag-btn.flagged { border-color: #e67e22; color: #e67e22; background: #fef0e0; }
+
+  /* Testo del brano */
+  .brano-box {
+    background: white;
+    border: 1px solid var(--grigio-bordo);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: #2a2a3a;
+    border-left: 5px solid var(--blu);
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .brano-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--blu);
+    margin-bottom: 14px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .domanda-card {
+    background: white;
+    border: 1px solid var(--grigio-bordo);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .domanda-testo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #1a1a2e;
+    margin-bottom: 22px;
+  }
+
+  /* Risposta multipla */
+  .opzioni-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .opzione {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 18px;
+    border: 2px solid var(--grigio-bordo);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14.5px;
+    color: #2a2a3a;
+  }
+
+  .opzione:hover { border-color: #7aabee; background: var(--blu-chiaro); }
+
+  .opzione input[type="radio"] { display: none; }
+
+  .opzione-marker {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    color: #aaa;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .opzione.selected {
+    border-color: var(--blu);
+    background: var(--blu-chiaro);
+  }
+
+  .opzione.selected .opzione-marker {
+    background: var(--blu);
+    border-color: var(--blu);
+    color: white;
+  }
+
+  /* Vero/Falso */
+  .vf-wrap { display: flex; gap: 12px; }
+
+  .vf-btn {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid var(--grigio-bordo);
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    background: white;
+    transition: all 0.15s;
+    color: #555;
+  }
+
+  .vf-btn:hover { border-color: #7aabee; background: var(--blu-chiaro); }
+  .vf-btn.selected-v { border-color: var(--verde); background: #e8f5ec; color: var(--verde); }
+  .vf-btn.selected-f { border-color: var(--rosso); background: #fdecea; color: var(--rosso); }
+
+  /* Risposta aperta */
+  .aperta-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--grigio-bordo);
+    border-radius: 9px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 15px;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.2s;
+    color: #2a2a3a;
+  }
+
+  .aperta-textarea:focus { border-color: var(--blu); }
+
+  /* Cloze */
+  .cloze-wrap {
+    font-family: 'Source Serif 4', serif;
+    font-size: 15.5px;
+    line-height: 2.2;
+    color: #2a2a3a;
+  }
+
+  .cloze-input {
+    display: inline-block;
+    border: none;
+    border-bottom: 2px solid var(--blu);
+    padding: 2px 8px;
+    font-size: 15px;
+    font-family: 'Source Serif 4', serif;
+    outline: none;
+    min-width: 100px;
+    background: transparent;
+    color: var(--blu);
+    font-weight: 600;
+  }
+
+  /* Navigazione bottom */
+  .nav-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .btn-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 2px solid;
+  }
+
+  .btn-prev {
+    background: white;
+    border-color: var(--grigio-bordo);
+    color: #555;
+  }
+
+  .btn-prev:hover { border-color: var(--blu); color: var(--blu); }
+
+  .btn-next {
+    background: var(--blu);
+    border-color: var(--blu);
+    color: white;
+  }
+
+  .btn-next:hover { background: var(--blu-scuro); }
+
+  .btn-consegna {
+    background: var(--verde);
+    border-color: var(--verde);
+    color: white;
+    padding: 11px 28px;
+    margin-left: auto;
+  }
+
+  .btn-consegna:hover { background: #155e39; }
+
+  /* progresso centrale */
+  .progresso-info {
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+  }
+
+  /* ===== SCHERMATA REPORT ===== */
+  #report-screen {
+    display: none;
+    min-height: 100vh;
+    background: #f0f2f7;
+    padding: 40px 20px;
+  }
+
+  .report-wrap { max-width: 820px; margin: 0 auto; }
+
+  .report-header {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .report-banner {
+    background: linear-gradient(135deg, var(--blu) 0%, #1565c0 100%);
+    color: white;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .report-banner h2 { font-size: 20px; font-weight: 700; }
+  .report-banner p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+
+  .punteggio-globale {
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .punteggio-globale .valore {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .punteggio-globale .label { font-size: 11px; opacity: 0.8; margin-top: 4px; }
+
+  .report-meta {
+    padding: 20px 32px;
+    display: flex;
+    gap: 32px;
+    border-bottom: 1px solid var(--grigio-bordo);
+    flex-wrap: wrap;
+  }
+
+  .meta-item { font-size: 13px; color: #666; }
+  .meta-item strong { color: var(--testo); }
+
+  .sezioni-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .sezione-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .sezione-card h3 { font-size: 13px; font-weight: 700; color: var(--blu); margin-bottom: 4px; }
+  .sezione-card .sottotitolo { font-size: 11px; color: #aaa; margin-bottom: 14px; }
+
+  .barra-wrap {
+    background: var(--grigio);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .barra-fill {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 1s ease;
+    background: var(--blu);
+  }
+
+  .barra-fill.media { background: #e67e22; }
+  .barra-fill.bassa { background: var(--rosso); }
+
+  .sezione-score { font-size: 22px; font-weight: 800; color: var(--testo); }
+  .sezione-score span { font-size: 13px; font-weight: 400; color: #999; }
+
+  /* Dettaglio risposte */
+  .dettaglio-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+
+  .dettaglio-header {
+    padding: 18px 24px;
+    background: var(--grigio);
+    border-bottom: 1px solid var(--grigio-bordo);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .riga-risposta {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13.5px;
+  }
+
+  .riga-risposta:last-child { border-bottom: none; }
+
+  .esito-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .esito-icon.ok { background: #e8f5ec; color: var(--verde); }
+  .esito-icon.ko { background: #fdecea; color: var(--rosso); }
+  .esito-icon.skip { background: #f5f5f5; color: #aaa; }
+
+  .riga-testo { flex: 1; }
+  .riga-testo .q-num { font-weight: 700; color: #888; font-size: 11px; margin-bottom: 2px; }
+  .riga-testo .q-text { color: #2a2a3a; margin-bottom: 4px; }
+  .riga-testo .q-risposta { font-size: 12px; color: #666; }
+  .riga-testo .q-risposta .corretta { color: var(--verde); font-weight: 600; }
+  .riga-testo .q-risposta .data { color: var(--rosso); }
+
+  .btn-stampa {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: var(--blu);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(0,61,143,0.3);
+  }
+
+  .btn-stampa:hover { background: var(--blu-scuro); transform: translateY(-1px); }
+  .btn-stampa:active { transform: translateY(0); }
+
+  .consegna-box {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    border-top: 4px solid var(--blu);
+  }
+
+  .consegna-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blu);
+    margin-bottom: 10px;
+  }
+
+  .consegna-box p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .consegna-steps {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .consegna-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+    max-width: 120px;
+    text-align: center;
+  }
+
+  .step-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--blu-chiaro);
+    color: var(--blu);
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-arrow {
+    font-size: 22px;
+    color: #ccc;
+    align-self: center;
+    margin-top: -20px;
+  }
+
+  @media print {
+    .consegna-box, .top-bar, .sidebar { display: none !important; }
+    #report-screen { padding: 0; background: white; }
+    .report-wrap { max-width: 100%; }
+    .sezioni-grid { grid-template-columns: repeat(3,1fr); }
+    body { background: white; }
+  }
+
+  @media (max-width: 720px) {
+    .intro-info-grid { grid-template-columns: 1fr 1fr; }
+    .sezioni-grid { grid-template-columns: 1fr; }
+    .main-content { padding: 20px 16px; margin-left: 0; }
+    .sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SCHERMATA INTRO ===== -->
+<div id="intro-screen">
+  <div class="intro-logo">
+    <div class="logo-badge">INVALSI</div>
+    <div class="logo-text">
+      Sistema Nazionale<br>di Valutazione
+    </div>
+  </div>
+
+  <div class="intro-card">
+    <div class="intro-header">
+      <h1>Simulazione Prova INVALSI – Italiano</h1>
+      <p>Scuola Secondaria di Primo Grado &nbsp;·&nbsp; Classe Terza</p>
+    </div>
+    <div class="intro-body">
+
+      <div class="intro-info-grid">
+        <div class="info-box">
+          <div class="label">Domande totali</div>
+          <div class="value">40</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Tempo disponibile</div>
+          <div class="value">75 min</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Sezioni</div>
+          <div class="value">3</div>
+        </div>
+      </div>
+
+      <div class="intro-sezioni">
+        <h3>Struttura della prova</h3>
+        <div class="sezione-row">
+          <span class="s-num">A</span>
+          <span class="s-name">Comprensione del testo (testo narrativo)</span>
+          <span class="s-q">15 domande</span>
+        </div>
+        <div class="sezione-row">
+          <span class="s-num">B</span>
+          <span class="s-name">Comprensione del testo (testo espositivo)</span>
+          <span class="s-q">13 domande</span>
+        </div>
+        <div class="sezione-row">
+          <span class="s-num">C</span>
+          <span class="s-name">Riflessione sulla lingua (grammatica e lessico)</span>
+          <span class="s-q">12 domande</span>
+        </div>
+      </div>
+
+      <div class="istruzioni-box">
+        <h3>⚠ Istruzioni per lo studente</h3>
+        <ul>
+          <li>Leggi attentamente ogni domanda prima di rispondere.</li>
+          <li>Per le domande a scelta multipla, seleziona <strong>una sola risposta</strong>.</li>
+          <li>Puoi tornare su una domanda già risposta e cambiare la tua risposta.</li>
+          <li>Puoi contrassegnare una domanda con 🚩 per rivederla in seguito.</li>
+          <li>Il timer in alto mostra il tempo rimasto: organizza il tuo lavoro.</li>
+          <li>Quando hai terminato, clicca su <strong>"Consegna prova"</strong>.</li>
+          <li>Una volta consegnata, non potrai più modificare le risposte.</li>
+        </ul>
+      </div>
+
+      <div class="nome-input-wrap">
+        <label for="nome-studente">Nome e Cognome dello studente</label>
+        <input type="text" id="nome-studente" placeholder="Es. Mario Rossi" oninput="checkNome()">
+      </div>
+
+      <button class="btn-start" id="btn-avvia" onclick="avviaProva()" disabled>
+        ▶ &nbsp; Avvia la prova
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROVA ===== -->
+<div id="prova-screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="top-badge">INVALSI</div>
+      <div class="top-title">Italiano – Terza Media</div>
+    </div>
+    <div class="top-bar-right">
+      <div class="nome-badge" id="top-nome"></div>
+      <div class="timer-wrap">
+        <span class="timer-icon">⏱</span>
+        <div id="timer-display">75:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-stato">
+        <div class="stato-row">
+          <span class="s-label">Risposte date</span>
+          <span class="s-val" id="stato-risposte">0 / 40</span>
+        </div>
+        <div class="stato-row">
+          <span class="s-label">Da rivedere</span>
+          <span class="s-val" id="stato-flag">0</span>
+        </div>
+      </div>
+      <div id="nav-domande"></div>
+      <div class="sidebar-legenda">
+        <div class="legenda-title">Legenda</div>
+        <div class="legenda-item">
+          <div class="legenda-dot" style="background:white;border-color:#d0d5de;"></div>
+          Non risposta
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-dot" style="background:#e8f0fb;border-color:#7aabee;"></div>
+          Risposta data
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-dot" style="background:#fef0e0;border-color:#e67e22;"></div>
+          Da rivedere
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-dot" style="background:var(--blu);border-color:var(--blu);"></div>
+          Domanda attuale
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div id="domanda-container"></div>
+
+      <div class="nav-bottom">
+        <button class="btn-nav btn-prev" id="btn-prev" onclick="cambiaD(-1)">◀ Precedente</button>
+        <div class="progresso-info" id="progresso-text"></div>
+        <button class="btn-nav btn-next" id="btn-next" onclick="cambiaD(1)">Successiva ▶</button>
+        <button class="btn-nav btn-consegna" id="btn-consegna" onclick="consegnaProva()" style="display:none;">✓ Consegna prova</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== REPORT ===== -->
+<div id="report-screen">
+  <div class="report-wrap" id="report-contenuto"></div>
+</div>
+
+<script>
+// ===== DATI PROVA =====
+const DURATA = 75 * 60; // secondi
+
+const sezioni = [
+  { id: 'A', nome: 'Comprensione – Testo narrativo', da: 1, a: 15 },
+  { id: 'B', nome: 'Comprensione – Testo espositivo', da: 16, a: 28 },
+  { id: 'C', nome: 'Riflessione sulla lingua', da: 29, a: 40 },
+];
+
+// Brano A
+const branoA = `La mattina del 15 ottobre, Giulia si svegliò con una sensazione strana, come se qualcosa nell'aria fosse cambiato. Dalla finestra della sua camera al terzo piano, il cortile del condominio sembrava uguale a sempre: le stesse panchine di cemento, lo stesso acero che perdeva le sue ultime foglie rosse, la stessa bicicletta di Enrico arrugginita contro il muro. Eppure qualcosa non tornava.
+
+Si alzò, si avvolse nella coperta e guardò fuori. Era ancora buio, forse le sei. Una luce fioca filtrava dalle veneziane del signor Armando, il vicino del piano di sopra che si alzava sempre prestissimo. Giulia lo aveva sentito raccontare che in fabbrica, per trent'anni, aveva fatto il turno delle sei, e ormai il corpo non sapeva più dormire fino a tardi.
+
+Scese in cucina scalza, sentendo il freddo delle piastrelle salire fino alle ginocchia. Sua madre non c'era ancora. Sul tavolo c'era un biglietto: "Sono andata a prendere il pane. Torno subito." Giulia sorrise. Conosceva quel "subito": sua madre incontrava sempre qualcuno al forno, finiva per fermarsi a parlare, e tornava quaranta minuti dopo con il pane freddo e tre pettegolezzi nuovi.
+
+Si preparò il tè. Mentre aspettava che bollisse l'acqua, si accorse che dalla finestra della cucina si vedeva qualcosa di diverso nel cortile: al posto della bicicletta di Enrico c'era una scatola di cartone grande, quasi quanto un frigorifero. Qualcuno si era trasferito, o stava per farlo.`;
+
+// Brano B
+const branoB = `Il cambiamento climatico è oggi una delle sfide più urgenti che l'umanità si trova ad affrontare. Le temperature medie globali sono aumentate di circa 1,1 gradi Celsius rispetto all'epoca preindustriale, e gli scienziati avvertono che superare la soglia di 1,5 gradi potrebbe innescare effetti a cascata difficilmente reversibili.
+
+Le cause principali di questo riscaldamento sono le emissioni di gas serra prodotte dalle attività umane: la combustione di carbone, petrolio e gas naturale per produrre energia è responsabile di oltre il 70% delle emissioni globali di CO₂. A queste si aggiungono la deforestazione, l'allevamento intensivo e i trasporti.
+
+Le conseguenze già visibili sono molteplici: l'aumento della frequenza e dell'intensità di eventi meteorologici estremi come uragani, siccità e alluvioni; lo scioglimento dei ghiacciai artici e dell'Antartide, che contribuisce all'innalzamento del livello del mare; la perdita di biodiversità causata dalla distruzione degli habitat naturali.
+
+La risposta internazionale al problema si è concretizzata nell'Accordo di Parigi del 2015, sottoscritto da quasi tutti i Paesi del mondo. L'obiettivo è limitare il riscaldamento globale ben al di sotto dei 2 gradi, puntando a 1,5 gradi, attraverso la riduzione progressiva delle emissioni e la transizione verso le energie rinnovabili come il solare e l'eolico.
+
+Tuttavia, gli esperti sottolineano che i progressi attuali non sono ancora sufficienti. Ogni singolo individuo può contribuire attraverso scelte quotidiane: ridurre il consumo di carne, privilegiare i trasporti pubblici o la bicicletta, isolare meglio le case e scegliere fonti di energia rinnovabile.`;
+
+const domande = [
+  // === SEZIONE A – Comprensione narrativo ===
+  {
+    id:1, sezione:'A', tipo:'multipla',
+    testo:'Dove si svolge la scena iniziale del racconto?',
+    opzioni:['In una villa in campagna','In un appartamento in città','In una casa al mare','In un paese di montagna'],
+    corretta:1
+  },
+  {
+    id:2, sezione:'A', tipo:'multipla',
+    testo:'A che ora si sveglia Giulia, all\'inizio del racconto?',
+    opzioni:['Alle cinque del mattino','Alle sette','Verso le sei del mattino','A mezzogiorno'],
+    corretta:2
+  },
+  {
+    id:3, sezione:'A', tipo:'vf',
+    testo:'La bicicletta di Enrico è descritta come nuova e lucida.',
+    corretta:'Falso'
+  },
+  {
+    id:4, sezione:'A', tipo:'multipla',
+    testo:'Perché il signor Armando si alza sempre molto presto?',
+    opzioni:['Perché soffre di insonnia','Perché per trent\'anni ha fatto il turno delle sei in fabbrica','Perché deve portare a spasso il cane','Perché apre un negozio'],
+    corretta:1
+  },
+  {
+    id:5, sezione:'A', tipo:'multipla',
+    testo:'Cosa c\'è scritto nel biglietto che la madre ha lasciato sul tavolo?',
+    opzioni:['"Vado a fare la spesa, cena da sola"','"Sono andata a prendere il pane. Torno subito."','"Ho una riunione, torno tardi"','"Sono dal medico"'],
+    corretta:1
+  },
+  {
+    id:6, sezione:'A', tipo:'vf',
+    testo:'Giulia sa già che la madre tornerà davvero in pochi minuti.',
+    corretta:'Falso'
+  },
+  {
+    id:7, sezione:'A', tipo:'aperta',
+    testo:'Spiega con parole tue cosa intende l\'autore quando scrive che la madre tornava con "il pane freddo e tre pettegolezzi nuovi".',
+    corretta:null
+  },
+  {
+    id:8, sezione:'A', tipo:'multipla',
+    testo:'Cosa nota di diverso Giulia nel cortile, dalla finestra della cucina?',
+    opzioni:['L\'acero è stato abbattuto','La panchina è rotta','Al posto della bicicletta c\'è una grande scatola di cartone','Il cancello è aperto'],
+    corretta:2
+  },
+  {
+    id:9, sezione:'A', tipo:'multipla',
+    testo:'Quale figura retorica è presente in "il freddo delle piastrelle salire fino alle ginocchia"?',
+    opzioni:['Metafora','Similitudine','Personificazione','Iperbole'],
+    corretta:0
+  },
+  {
+    id:10, sezione:'A', tipo:'vf',
+    testo:'L\'ambientazione del racconto è chiaramente estiva.',
+    corretta:'Falso'
+  },
+  {
+    id:11, sezione:'A', tipo:'multipla',
+    testo:'Il punto di vista narrativo del brano è:',
+    opzioni:['In prima persona (io narrante)','In terza persona con focalizzazione su Giulia','In seconda persona','Narratore onnisciente senza focalizzazione'],
+    corretta:1
+  },
+  {
+    id:12, sezione:'A', tipo:'cloze',
+    testo:'Giulia si preparò il _____ mentre aspettava che bollisse _____ acqua.',
+    campi:['tè', 'l\''],
+    corretta:['tè', 'l\'']
+  },
+  {
+    id:13, sezione:'A', tipo:'vf',
+    testo:'Il racconto si svolge in un\'unica mattina.',
+    corretta:'Vero'
+  },
+  {
+    id:14, sezione:'A', tipo:'multipla',
+    testo:'Il tono del racconto è principalmente:',
+    opzioni:['Angoscioso e drammatico','Ironico e comico','Quotidiano e descrittivo','Epico e avventuroso'],
+    corretta:2
+  },
+  {
+    id:15, sezione:'A', tipo:'aperta',
+    testo:'Giulia ha una "sensazione strana" all\'inizio del racconto. Sulla base del testo, cosa potrebbe aver causato questa sensazione? Motiva la tua risposta.',
+    corretta:null
+  },
+
+  // === SEZIONE B – Comprensione espositivo ===
+  {
+    id:16, sezione:'B', tipo:'multipla',
+    testo:'Di quanti gradi Celsius le temperature medie globali sono aumentate rispetto all\'epoca preindustriale?',
+    opzioni:['0,5 gradi','1,1 gradi','2 gradi','3 gradi'],
+    corretta:1
+  },
+  {
+    id:17, sezione:'B', tipo:'vf',
+    testo:'Secondo il testo, superare la soglia di 1,5 gradi potrebbe avere effetti difficilmente reversibili.',
+    corretta:'Vero'
+  },
+  {
+    id:18, sezione:'B', tipo:'multipla',
+    testo:'Quale settore è responsabile di oltre il 70% delle emissioni globali di CO₂?',
+    opzioni:['L\'agricoltura e l\'allevamento','La deforestazione','La combustione di combustibili fossili per produrre energia','I trasporti marittimi'],
+    corretta:2
+  },
+  {
+    id:19, sezione:'B', tipo:'multipla',
+    testo:'L\'Accordo di Parigi è stato firmato nel:',
+    opzioni:['2009','2012','2015','2020'],
+    corretta:2
+  },
+  {
+    id:20, sezione:'B', tipo:'vf',
+    testo:'L\'Accordo di Parigi è stato sottoscritto solo dai Paesi europei.',
+    corretta:'Falso'
+  },
+  {
+    id:21, sezione:'B', tipo:'multipla',
+    testo:'Qual è l\'obiettivo principale dell\'Accordo di Parigi?',
+    opzioni:['Azzerare completamente le emissioni entro il 2030','Limitare il riscaldamento globale ben al di sotto dei 2 gradi','Vietare l\'uso del carbone in tutto il mondo','Creare un fondo comune per i Paesi colpiti dal maltempo'],
+    corretta:1
+  },
+  {
+    id:22, sezione:'B', tipo:'aperta',
+    testo:'Elenca almeno tre conseguenze del cambiamento climatico citate nel testo.',
+    corretta:null
+  },
+  {
+    id:23, sezione:'B', tipo:'vf',
+    testo:'Secondo il testo, i progressi attuali nella lotta al cambiamento climatico sono già sufficienti.',
+    corretta:'Falso'
+  },
+  {
+    id:24, sezione:'B', tipo:'multipla',
+    testo:'Quale di queste azioni NON è indicata nel testo come contributo individuale?',
+    opzioni:['Ridurre il consumo di carne','Piantare alberi nel proprio giardino','Preferire i trasporti pubblici','Scegliere energia rinnovabile'],
+    corretta:1
+  },
+  {
+    id:25, sezione:'B', tipo:'multipla',
+    testo:'Cosa si intende con "effetti a cascata" nel contesto del testo?',
+    opzioni:['Piogge abbondanti nelle zone montuose','Una serie di conseguenze che si innescano una dopo l\'altra','Un tipo di energia rinnovabile','L\'aumento del livello dei fiumi'],
+    corretta:1
+  },
+  {
+    id:26, sezione:'B', tipo:'cloze',
+    testo:'Lo scioglimento dei ghiacciai contribuisce all\'innalzamento del livello del _____, mentre la perdita di _____ è causata dalla distruzione degli habitat.',
+    campi:['mare', 'biodiversità'],
+    corretta:['mare','biodiversità']
+  },
+  {
+    id:27, sezione:'B', tipo:'vf',
+    testo:'L\'allevamento intensivo è citato tra le cause delle emissioni di gas serra.',
+    corretta:'Vero'
+  },
+  {
+    id:28, sezione:'B', tipo:'multipla',
+    testo:'Il testo espositivo ha lo scopo principale di:',
+    opzioni:['Raccontare una storia legata al clima','Persuadere il lettore ad acquistare pannelli solari','Informare e spiegare il fenomeno del cambiamento climatico','Intrattenere con aneddoti scientifici'],
+    corretta:2
+  },
+
+  // === SEZIONE C – Grammatica e lessico ===
+  {
+    id:29, sezione:'C', tipo:'multipla',
+    testo:'Individua il soggetto nella frase: "Le foglie rosse cadono lentamente dall\'acero."',
+    opzioni:['Le foglie rosse','Cadono','Lentamente','Dall\'acero'],
+    corretta:0
+  },
+  {
+    id:30, sezione:'C', tipo:'multipla',
+    testo:'In quale delle seguenti frasi è presente un complemento oggetto?',
+    opzioni:['"Marco corre veloce nel parco."','"Giulia prepara il tè ogni mattina."','"Il treno arriva in ritardo."','"Silvia abita vicino alla scuola."'],
+    corretta:1
+  },
+  {
+    id:31, sezione:'C', tipo:'vf',
+    testo:'Il verbo "aveva sentito" è alla forma passiva.',
+    corretta:'Falso'
+  },
+  {
+    id:32, sezione:'C', tipo:'multipla',
+    testo:'Qual è il modo e il tempo del verbo "avesse cambiato" nella frase "come se qualcosa fosse cambiato"?',
+    opzioni:['Indicativo trapassato prossimo','Congiuntivo trapassato','Condizionale passato','Infinito passato'],
+    corretta:1
+  },
+  {
+    id:33, sezione:'C', tipo:'multipla',
+    testo:'Quale delle seguenti parole è un avverbio di modo?',
+    opzioni:['Sempre','Lentamente','Molto','Domani'],
+    corretta:1
+  },
+  {
+    id:34, sezione:'C', tipo:'cloze',
+    testo:'La parola "preindustriale" è formata dal prefisso _____ che significa "prima di", aggiunto alla parola base _____.',
+    campi:['pre-', 'industriale'],
+    corretta:['pre', 'industriale']
+  },
+  {
+    id:35, sezione:'C', tipo:'multipla',
+    testo:'In quale frase la virgola è usata in modo SCORRETTO?',
+    opzioni:['"Comprai pane, latte e burro."','"Quando arrivai, tutti erano già partiti."','"Marco, e Luca giocavano insieme."','"Grazie, arrivederci."'],
+    corretta:2
+  },
+  {
+    id:36, sezione:'C', tipo:'vf',
+    testo:'Il termine "biodiversità" è una parola composta.',
+    corretta:'Vero'
+  },
+  {
+    id:37, sezione:'C', tipo:'multipla',
+    testo:'Qual è il sinonimo più appropriato di "urgente" nel contesto del brano sul clima?',
+    opzioni:['Trascurabile','Impellente','Lontano','Secondario'],
+    corretta:1
+  },
+  {
+    id:38, sezione:'C', tipo:'multipla',
+    testo:'Nella frase "Gli scienziati avvertono che superare la soglia potrebbe innescare effetti", il verbo "avvertono" regge una proposizione:',
+    opzioni:['Causale','Oggettiva (completiva diretta)','Temporale','Concessiva'],
+    corretta:1
+  },
+  {
+    id:39, sezione:'C', tipo:'vf',
+    testo:'La parola "acero" appartiene alla categoria grammaticale dei sostantivi.',
+    corretta:'Vero'
+  },
+  {
+    id:40, sezione:'C', tipo:'aperta',
+    testo:'Spiega la differenza tra "similitudine" e "metafora" e fornisci un esempio per ciascuna.',
+    corretta:null
+  }
+];
+
+// ===== STATO =====
+let currentIdx = 0;
+let risposte = {};
+let flagged = {};
+let timerInterval = null;
+let secondiRimasti = DURATA;
+let nomeStudente = '';
+let provaConsegnata = false;
+let inizioProva = null;
+
+// ===== INTRO =====
+function checkNome() {
+  const v = document.getElementById('nome-studente').value.trim();
+  document.getElementById('btn-avvia').disabled = v.length < 2;
+}
+
+function avviaProva() {
+  nomeStudente = document.getElementById('nome-studente').value.trim();
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('prova-screen').style.display = 'block';
+  document.getElementById('top-nome').textContent = nomeStudente;
+  inizioProva = Date.now();
+  buildNavSidebar();
+  mostraDomanda(0);
+  startTimer();
+}
+
+// ===== TIMER =====
+function startTimer() {
+  timerInterval = setInterval(() => {
+    secondiRimasti--;
+    aggiornaTimer();
+    if (secondiRimasti <= 0) {
+      clearInterval(timerInterval);
+      consegnaProva(true);
+    }
+  }, 1000);
+}
+
+function aggiornaTimer() {
+  const m = Math.floor(secondiRimasti / 60);
+  const s = secondiRimasti % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = '';
+  if (secondiRimasti <= 300) el.classList.add('danger');
+  else if (secondiRimasti <= 600) el.classList.add('warning');
+}
+
+// ===== NAVIGAZIONE SIDEBAR =====
+function buildNavSidebar() {
+  const container = document.getElementById('nav-domande');
+  container.innerHTML = '';
+  sezioni.forEach(s => {
+    const label = document.createElement('div');
+    label.className = 'nav-sezione-label';
+    label.textContent = `Sezione ${s.id} – ${s.nome.split('–')[1]?.trim() || s.nome}`;
+    container.appendChild(label);
+
+    const grid = document.createElement('div');
+    grid.className = 'nav-grid';
+    for (let i = s.da - 1; i < s.a; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn';
+      btn.id = `nav-${i}`;
+      btn.textContent = i + 1;
+      btn.onclick = (function(idx){ return () => mostraDomanda(idx); })(i);
+      grid.appendChild(btn);
+    }
+    container.appendChild(grid);
+  });
+}
+
+function aggiornaNav() {
+  domande.forEach((_, i) => {
+    const btn = document.getElementById(`nav-${i}`);
+    if (!btn) return;
+    btn.className = 'nav-btn';
+    if (i === currentIdx) btn.classList.add('active');
+    else if (risposte[i] !== undefined && risposte[i] !== '') btn.classList.add('answered');
+    if (flagged[i]) btn.classList.add('flagged');
+  });
+
+  // stato
+  const risposte_count = Object.keys(risposte).filter(k => risposte[k] !== '' && risposte[k] !== undefined).length;
+  const flag_count = Object.keys(flagged).filter(k => flagged[k]).length;
+  document.getElementById('stato-risposte').textContent = `${risposte_count} / 40`;
+  document.getElementById('stato-flag').textContent = flag_count;
+}
+
+// ===== MOSTRA DOMANDA =====
+function mostraDomanda(idx) {
+  currentIdx = idx;
+  const d = domande[idx];
+  const container = document.getElementById('domanda-container');
+  const sezioneInfo = sezioni.find(s => s.id === d.sezione);
+
+  let branoHtml = '';
+  if (d.sezione === 'A') {
+    branoHtml = `<div class="brano-box"><div class="brano-title">📖 Testo A – Racconto</div>${branoA.split('\n\n').map(p=>`<p>${p}</p>`).join('<br>')}</div>`;
+  } else if (d.sezione === 'B') {
+    branoHtml = `<div class="brano-box"><div class="brano-title">📄 Testo B – Testo espositivo</div>${branoB.split('\n\n').map(p=>`<p>${p}</p>`).join('<br>')}</div>`;
+  }
+
+  let rispostaHtml = '';
+  const r = risposte[idx];
+
+  if (d.tipo === 'multipla') {
+    const lettere = ['A','B','C','D'];
+    rispostaHtml = `<div class="opzioni-list">${d.opzioni.map((op,i) => `
+      <label class="opzione${r === i ? ' selected' : ''}" onclick="selezionaRisposta(${idx}, ${i}, this)">
+        <input type="radio" name="q${idx}" value="${i}" ${r === i ? 'checked' : ''}>
+        <div class="opzione-marker">${lettere[i]}</div>
+        <span>${op}</span>
+      </label>`).join('')}</div>`;
+  } else if (d.tipo === 'vf') {
+    const rv = r === 'Vero', rf = r === 'Falso';
+    rispostaHtml = `<div class="vf-wrap">
+      <button class="vf-btn${rv?' selected-v':''}" onclick="selezionaVF(${idx},'Vero')">✓ &nbsp;Vero</button>
+      <button class="vf-btn${rf?' selected-f':''}" onclick="selezionaVF(${idx},'Falso')">✗ &nbsp;Falso</button>
+    </div>`;
+  } else if (d.tipo === 'aperta') {
+    rispostaHtml = `<textarea class="aperta-textarea" id="aperta-${idx}" placeholder="Scrivi qui la tua risposta..." onchange="risposte[${idx}]=this.value;aggiornaNav()">${r || ''}</textarea>`;
+  } else if (d.tipo === 'cloze') {
+    const saved = r || [];
+    let testo = d.testo;
+    let campoIdx = 0;
+    testo = testo.replace(/_{3,}/g, () => {
+      const val = saved[campoIdx] || '';
+      const html = `<input class="cloze-input" type="text" value="${val}" data-idx="${idx}" data-campo="${campoIdx}" oninput="salvaCloze(${idx})" placeholder="___" style="width:${Math.max(80, (d.campi[campoIdx]||'').length*14+40)}px">`;
+      campoIdx++;
+      return html;
+    });
+    rispostaHtml = `<div class="cloze-wrap">${testo}</div>`;
+  }
+
+  container.innerHTML = `
+    <div class="domanda-header">
+      <div class="domanda-tag">
+        <span class="tag-numero">Domanda ${idx+1}</span>
+        <span class="tag-sezione">Sezione ${d.sezione} – ${sezioneInfo.nome}</span>
+      </div>
+      <button class="flag-btn${flagged[idx]?' flagged':''}" onclick="toggleFlag(${idx})">
+        🚩 ${flagged[idx] ? 'Da rivedere' : 'Segna per revisione'}
+      </button>
+    </div>
+    ${branoHtml}
+    <div class="domanda-card">
+      <div class="domanda-testo">${d.testo}</div>
+      ${rispostaHtml}
+    </div>`;
+
+  // Aggiorna bottoni
+  document.getElementById('btn-prev').style.display = idx === 0 ? 'none' : '';
+  const isLast = idx === domande.length - 1;
+  document.getElementById('btn-next').style.display = isLast ? 'none' : '';
+  document.getElementById('btn-consegna').style.display = isLast ? '' : 'none';
+  document.getElementById('progresso-text').textContent = `${idx+1} di ${domande.length}`;
+
+  aggiornaNav();
+}
+
+// ===== RISPOSTE =====
+function selezionaRisposta(idx, val, el) {
+  risposte[idx] = val;
+  document.querySelectorAll(`[name=q${idx}]`).forEach(inp => {
+    inp.closest('.opzione').classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  aggiornaNav();
+}
+
+function selezionaVF(idx, val) {
+  risposte[idx] = val;
+  mostraDomanda(idx);
+}
+
+function salvaCloze(idx) {
+  const inputs = document.querySelectorAll(`[data-idx="${idx}"]`);
+  const vals = [];
+  inputs.forEach(inp => vals[parseInt(inp.dataset.campo)] = inp.value);
+  risposte[idx] = vals;
+  aggiornaNav();
+}
+
+function toggleFlag(idx) {
+  flagged[idx] = !flagged[idx];
+  aggiornaNav();
+  mostraDomanda(idx);
+}
+
+function cambiaD(delta) {
+  const nuovo = currentIdx + delta;
+  if (nuovo >= 0 && nuovo < domande.length) mostraDomanda(nuovo);
+}
+
+// ===== CONSEGNA =====
+function consegnaProva(automatica = false) {
+  const risposte_count = Object.keys(risposte).filter(k => risposte[k] !== '' && risposte[k] !== undefined).length;
+  const mancanti = 40 - risposte_count;
+  if (!automatica && mancanti > 0) {
+    if (!confirm(`Hai ancora ${mancanti} domand${mancanti===1?'a':'e'} senza risposta. Vuoi consegnare lo stesso?`)) return;
+  }
+  clearInterval(timerInterval);
+  provaConsegnata = true;
+  document.getElementById('prova-screen').style.display = 'none';
+  document.getElementById('report-screen').style.display = 'block';
+  generaReport();
+}
+
+// ===== REPORT =====
+function generaReport() {
+  const tempoUsato = DURATA - secondiRimasti;
+  const tm = Math.floor(tempoUsato / 60);
+  const ts = tempoUsato % 60;
+
+  let totCorrette = 0, totDomande = 0;
+  const sezioneStats = {};
+
+  sezioni.forEach(s => {
+    sezioneStats[s.id] = { nome: s.nome, corrette: 0, totale: 0, aperte: 0 };
+  });
+
+  domande.forEach((d, i) => {
+    sezioneStats[d.sezione].totale++;
+    if (d.tipo === 'aperta') {
+      sezioneStats[d.sezione].aperte++;
+      if (risposte[i] && risposte[i].trim().length > 10) {
+        sezioneStats[d.sezione].corrette += 0.5; // parziale
+        totCorrette += 0.5;
+      }
+    } else if (d.tipo === 'multipla') {
+      totDomande++;
+      if (risposte[i] === d.corretta) { sezioneStats[d.sezione].corrette++; totCorrette++; }
+    } else if (d.tipo === 'vf') {
+      totDomande++;
+      if (risposte[i] === d.corretta) { sezioneStats[d.sezione].corrette++; totCorrette++; }
+    } else if (d.tipo === 'cloze') {
+      const vals = risposte[i] || [];
+      let ok = 0;
+      d.campi.forEach((_, ci) => {
+        if ((vals[ci] || '').trim().toLowerCase() === d.corretta[ci].toLowerCase()) ok++;
+      });
+      const punti = ok / d.campi.length;
+      sezioneStats[d.sezione].corrette += punti;
+      totCorrette += punti;
+      totDomande++;
+    }
+  });
+
+  const pct = Math.round((totCorrette / 40) * 100);
+
+  let coloreGlobale = '#1a7a4a';
+  if (pct < 50) coloreGlobale = '#c0392b';
+  else if (pct < 70) coloreGlobale = '#e67e22';
+
+  // Sezioni cards
+  const sezioneCards = sezioni.map(s => {
+    const st = sezioneStats[s.id];
+    const pctS = Math.round((st.corrette / st.totale) * 100);
+    const classe = pctS >= 70 ? '' : pctS >= 50 ? ' media' : ' bassa';
+    return `<div class="sezione-card">
+      <h3>Sezione ${s.id}</h3>
+      <div class="sottotitolo">${s.nome}</div>
+      <div class="barra-wrap"><div class="barra-fill${classe}" style="width:${pctS}%"></div></div>
+      <div class="sezione-score">${pctS}% <span>/ ${st.totale} domande</span></div>
+      ${st.aperte > 0 ? `<div style="font-size:11px;color:#aaa;margin-top:4px;">* ${st.aperte} domanda/e aperta/e valutata/e parzialmente</div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Dettaglio per sezione
+  let dettaglioHtml = '';
+  sezioni.forEach(s => {
+    const dSez = domande.filter(d => d.sezione === s.id);
+    const righe = dSez.map(d => {
+      const i = d.id - 1;
+      const r = risposte[i];
+      let esito = 'skip', esitoIcon = '—';
+      let rispostaData = '<em style="color:#bbb">Non risposta</em>';
+      let correttaStr = '';
+
+      if (d.tipo === 'multipla') {
+        if (r !== undefined) {
+          const lettera = ['A','B','C','D'][r];
+          rispostaData = `<span class="data">${lettera}. ${d.opzioni[r]}</span>`;
+          esito = r === d.corretta ? 'ok' : 'ko';
+          if (esito === 'ko') correttaStr = ` → Corretta: <span class="corretta">${['A','B','C','D'][d.corretta]}. ${d.opzioni[d.corretta]}</span>`;
+        }
+      } else if (d.tipo === 'vf') {
+        if (r) {
+          rispostaData = `<span class="data">${r}</span>`;
+          esito = r === d.corretta ? 'ok' : 'ko';
+          if (esito === 'ko') correttaStr = ` → Corretta: <span class="corretta">${d.corretta}</span>`;
+        }
+      } else if (d.tipo === 'aperta') {
+        esito = (r && r.trim().length > 10) ? 'ok' : (r && r.trim().length > 0 ? 'ko' : 'skip');
+        rispostaData = r ? `<span style="color:#2a2a3a">"${r.substring(0,80)}${r.length>80?'…':''}"</span>` : '<em style="color:#bbb">Non risposta</em>';
+        correttaStr = ' <em style="color:#aaa">(valutazione docente)</em>';
+      } else if (d.tipo === 'cloze') {
+        const vals = r || [];
+        const ok = d.campi.every((_, ci) => (vals[ci]||'').trim().toLowerCase() === d.corretta[ci].toLowerCase());
+        esito = (vals.some(v => v && v.trim())) ? (ok ? 'ok' : 'ko') : 'skip';
+        rispostaData = `<span class="data">${vals.join(' / ') || '—'}</span>`;
+        if (!ok) correttaStr = ` → Corrette: <span class="corretta">${d.corretta.join(' / ')}</span>`;
+      }
+
+      esitoIcon = esito === 'ok' ? '✓' : esito === 'ko' ? '✗' : '—';
+
+      return `<div class="riga-risposta">
+        <div class="esito-icon ${esito}">${esitoIcon}</div>
+        <div class="riga-testo">
+          <div class="q-num">Domanda ${d.id}</div>
+          <div class="q-text">${d.testo.substring(0,90)}${d.testo.length>90?'…':''}</div>
+          <div class="q-risposta">Risposta: ${rispostaData}${correttaStr}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    dettaglioHtml += `<div class="dettaglio-section">
+      <div class="dettaglio-header">📋 Sezione ${s.id} – ${s.nome}</div>
+      ${righe}
+    </div>`;
+  });
+
+  document.getElementById('report-contenuto').innerHTML = `
+    <div class="report-header">
+      <div class="report-banner">
+        <div>
+          <h2>Risultati della prova</h2>
+          <p>Simulazione INVALSI Italiano – Terza Media</p>
+        </div>
+        <div class="punteggio-globale">
+          <div class="valore" style="color:${coloreGlobale === '#1a7a4a' ? '#7aff9e' : coloreGlobale === '#e67e22' ? '#ffc97a' : '#ff9a8a'}">${pct}%</div>
+          <div class="label">Punteggio globale</div>
+        </div>
+      </div>
+      <div class="report-meta">
+        <div class="meta-item">👤 Studente: <strong>${nomeStudente}</strong></div>
+        <div class="meta-item">📅 Data: <strong>${new Date().toLocaleDateString('it-IT')}</strong></div>
+        <div class="meta-item">⏱ Tempo: <strong>${tm}'${String(ts).padStart(2,'0')}"</strong></div>
+        <div class="meta-item">✓ Risposte date: <strong>${Object.keys(risposte).filter(k=>risposte[k]!==''&&risposte[k]!==undefined).length} / 40</strong></div>
+      </div>
+    </div>
+
+    <div class="sezioni-grid">${sezioneCards}</div>
+
+    ${dettaglioHtml}
+
+    <div class="consegna-box">
+      <h3>📤 Consegna il tuo elaborato</h3>
+      <p>Salva questa pagina come PDF e caricala su Google Classroom per completare la consegna.</p>
+      <div class="consegna-steps">
+        <div class="consegna-step">
+          <div class="step-circle">1</div>
+          Clicca il pulsante qui sotto
+        </div>
+        <div class="step-arrow">›</div>
+        <div class="consegna-step">
+          <div class="step-circle">2</div>
+          Scegli<br><strong>"Salva come PDF"</strong> dalla stampante
+        </div>
+        <div class="step-arrow">›</div>
+        <div class="consegna-step">
+          <div class="step-circle">3</div>
+          Carica il PDF su<br><strong>Google Classroom</strong>
+        </div>
+      </div>
+      <button class="btn-stampa" onclick="window.print()">🖨 &nbsp; Salva come PDF / Stampa</button>
+    </div>
+  `;
+
+  // Animazione barre
+  setTimeout(() => {
+    document.querySelectorAll('.barra-fill').forEach(el => {
+      el.style.width = el.style.width;
+    });
+  }, 100);
+}
+</script>
+</body>
+</html>
